@@ -46,25 +46,33 @@ namespace SuperHeroAPI.Controllers
         }
 
         [HttpPost("AddHero")]
-        public async Task<ActionResult<Superhero>> AddSuperHero(Superhero hero)
+        public async Task<ActionResult<List<Superhero>>> AddSuperHero(Superhero hero)
         {
 
             SuperHeroes.Add(hero);
             return Ok(hero);
         }
 
-        [HttpPut("UpdateHero")]
+        [HttpPut("UpdateHero/{id}")]
         public async Task<ActionResult<List<Superhero>>> UpdateSuperHero(int id, Superhero hero)
         {
             var oldHero = SuperHeroes.Find(x => x.ID == id);
-            oldHero = hero;
-            //oldHero.ID = hero.ID;
-            //oldHero.Name = hero.Name;
-            //oldHero.FirstName = hero.FirstName;
-            //oldHero.LastName = hero.LastName;
-            //oldHero.Place = hero.Place;
+            oldHero.ID = hero.ID;
+            oldHero.Name = hero.Name;
+            oldHero.FirstName = hero.FirstName;
+            oldHero.LastName = hero.LastName;
+            oldHero.Place = hero.Place;
 
             return Ok(SuperHeroes);
         }
+
+        [HttpDelete("deleteHero/{id}")]
+        public async Task<ActionResult<List<Superhero>>> DeleteHeroById(int id)
+        {
+            var HeroToDelete = SuperHeroes.Find(x => x.ID == id);
+            SuperHeroes.Remove(HeroToDelete);
+            return Ok(SuperHeroes);
+        }
+
     }
 }
