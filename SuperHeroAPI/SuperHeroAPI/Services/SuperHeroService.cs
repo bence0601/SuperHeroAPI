@@ -4,29 +4,62 @@ namespace SuperHeroAPI.Services
 {
     public class SuperHeroService : ISuperHeroService
     {
+        public static List<Superhero> SuperHeroes = new List<Superhero>
+        {
+            new Superhero
+            {   ID = 1,
+                Name = "Spider Man",
+                FirstName = "Peter",
+                LastName = "Parker",
+                Place = "New York" },
+
+            new Superhero
+            {   ID = 2,
+                Name = "Iron Man",
+                FirstName = "Tony",
+                LastName = "Stark",
+                Place = "Malibu" }
+
+        };
+
         public List<Superhero> GetAllHeroes()
         {
+            return SuperHeroes;
 
         }
 
         public Superhero GetSuperHeroById(int id)
         {
-            throw new NotImplementedException();
+            return SuperHeroes.Find(x => x.ID == id);
         }
 
         public List<Superhero> AddHero(Superhero hero)
         {
-            throw new NotImplementedException();
+            SuperHeroes.Add(hero);
+            return SuperHeroes;
         }
 
         public List<Superhero> UpdateHero(int id, Superhero newHero)
         {
-            throw new NotImplementedException();
+            var oldHero = SuperHeroService.SuperHeroes.Find(x => x.ID == id);
+            oldHero.ID = newHero.ID;
+            oldHero.Name = newHero.Name;
+            oldHero.FirstName = newHero.FirstName;
+            oldHero.LastName = newHero.LastName;
+            oldHero.Place = newHero.Place;
+
+            return SuperHeroes;
         }
 
         public List<Superhero> DeleteSuperHero(int id)
         {
-            throw new NotImplementedException();
+            var HeroToDelete = SuperHeroService.SuperHeroes.Find(x => x.ID == id);
+            if (HeroToDelete == null)
+            {
+                return null;
+            }
+            SuperHeroes.Remove(HeroToDelete);
+            return SuperHeroes;
         }
     }
 }
