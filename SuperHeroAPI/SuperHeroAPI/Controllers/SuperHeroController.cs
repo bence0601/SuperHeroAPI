@@ -8,18 +8,17 @@ namespace SuperHeroAPI.Controllers
     [ApiController]
     public class SuperHeroController : ControllerBase
     {
-        [HttpGet("AllSuperHeroes")]
 
-        private readonly SuperHeroService _superHeroService;
+        private readonly ISuperHeroService _IsuperHeroService;
 
-        public SuperHeroController(SuperHeroService superHeroService)
+        public SuperHeroController(ISuperHeroService IsuperHeroService)
         {
-            _superHeroService = superHeroService;
+            _IsuperHeroService = IsuperHeroService;
         }
+        [HttpGet("AllSuperHeroes")]
         public async Task<ActionResult<List<Superhero>>> GetAllHeroes()
         {
-            var result = _superHeroService.GetAllHeroes();
-            return Ok(SuperHeroService.SuperHeroes);
+            return _IsuperHeroService.GetAllHeroes();
         }
 
         [HttpGet("{id}")]
@@ -27,28 +26,28 @@ namespace SuperHeroAPI.Controllers
         {
             var hero = SuperHeroService.SuperHeroes.Find(x => x.ID == id);
 
-            var result = _superHeroService.GetSuperHeroById(id);
+            var result = _IsuperHeroService.GetSuperHeroById(id);
             return Ok(result);
         }
 
         [HttpPost("AddHero")]
         public async Task<ActionResult<List<Superhero>>> AddSuperHero(Superhero hero)
         {
-            var result = _superHeroService.AddHero(hero);
+            var result = _IsuperHeroService.AddHero(hero);
             return Ok(result);
         }
 
         [HttpPut("UpdateHero/{id}")]
         public async Task<ActionResult<List<Superhero>>> UpdateSuperHero(int id, Superhero hero)
         {
-            var result = _superHeroService.UpdateHero(id, hero);
+            var result = _IsuperHeroService.UpdateHero(id, hero);
             return Ok(result);
         }
 
         [HttpDelete("deleteHero/{id}")]
         public async Task<ActionResult<List<Superhero>>> DeleteHeroById(int id)
         {
-            var result = _superHeroService.DeleteSuperHero(id);
+            var result = _IsuperHeroService.DeleteSuperHero(id);
             return Ok(result);
         }
 
