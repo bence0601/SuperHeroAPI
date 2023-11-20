@@ -1,3 +1,4 @@
+using SuperHeroAPI.Data;
 using SuperHeroAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<ISuperHeroService, SuperHeroService>();
+builder.Services.AddDbContext<DataContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
