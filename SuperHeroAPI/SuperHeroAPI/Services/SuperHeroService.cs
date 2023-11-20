@@ -1,9 +1,13 @@
-﻿using SuperHeroAPI.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SuperHeroAPI.Data;
+using SuperHeroAPI.Models;
+
 
 namespace SuperHeroAPI.Services
 {
     public class SuperHeroService : ISuperHeroService
     {
+        public DataContext _context;
         public static List<Superhero> SuperHeroes = new List<Superhero>
         {
             new Superhero
@@ -22,11 +26,16 @@ namespace SuperHeroAPI.Services
 
         };
 
-        public List<Superhero> GetAllHeroes()
+        public SuperHeroService(DataContext context)
         {
-            return SuperHeroes;
-
+            _context = context;
         }
+        public async Task<List<Superhero>> GetAllHeroes()
+        {
+            var heroes = await _context.SuperHeroes.ToListAsync();
+            return heroes;
+        }
+
 
         public Superhero GetSuperHeroById(int id)
         {
